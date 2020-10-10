@@ -35,9 +35,15 @@ DEBUG = True
 ALLOWED_HOSTS = ['tripper1.herokuapp.com','localhost']
 
 
+GRAPHENE = {
+  'SCHEMA': 'src.schema.schema'
+}
+
 # Application definition
 
 INSTALLED_APPS = [
+    'testApp.apps.TestappConfig',
+    'graphene_django',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
