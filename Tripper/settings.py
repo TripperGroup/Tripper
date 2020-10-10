@@ -11,10 +11,17 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+import os
+import dj_database_url
+import dotenv
+import django_heroku
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+dotenv_file = os.path.join(BASE_DIR, ".env")
+if os.path.isfile(dotenv_file):
+    dotenv.load_dotenv(dotenv_file)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -25,7 +32,7 @@ SECRET_KEY = ')&jb8hjbz)*ms7zbjbitun6oa%w5xfm^suymjfqrsuof9vdhtm'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['tripper1.herokuapp.com','localhost']
 
 
 # Application definition
@@ -47,6 +54,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+
 ]
 
 ROOT_URLCONF = 'Tripper.urls'
@@ -73,13 +82,8 @@ WSGI_APPLICATION = 'Tripper.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
+DATABASES = {}
+DATABASES['default'] = dj_database_url.config(conn_max_age=600)
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -100,6 +104,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
@@ -118,3 +123,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+django_heroku.settings(locals())
+options = DATABASES['default'].get('OPTIONS', {})
+options.pop('sslmode', None)
