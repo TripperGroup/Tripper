@@ -30,10 +30,10 @@ if os.path.isfile(dotenv_file):
 SECRET_KEY = ')&jb8hjbz)*ms7zbjbitun6oa%w5xfm^suymjfqrsuof9vdhtm'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 
-ALLOWED_HOSTS = ['tripper1.herokuapp.com','localhost']
+ALLOWED_HOSTS = ['tripper1.herokuapp.com','localhost','http://127.0.0.1/']
 
 
 # Application definition

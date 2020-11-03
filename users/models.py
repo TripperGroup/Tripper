@@ -5,13 +5,17 @@ import datetime
 
 class User(AbstractUser):
     email = models.EmailField( max_length=100, verbose_name="email address", unique=True)
-    gender = models.CharField(max_length=20)
-    saved_trips = models.TextField() ## To do 
+    gender = models.CharField(max_length=20, blank=True)
+
+    
+
     about = models.TextField(blank=True)
     trip_status = models.BooleanField(default=False)
     joined_at = datetime.datetime.now()
     phone = models.CharField(null=True,max_length=50)
-    avatar = models.ImageField(blank=True)
+    avatar = models.ImageField(blank=True,null= True , upload_to='images/profile/avatar')
+    header = models.ImageField(blank= True, null= True, upload_to='images/profile/header')
+
     REQUIRED_FIELDS = ['email']
     USERNAME_FIELD = "username"   # e.g: "username", "email"
     EMAIL_FIELD = "email"         # e.g: "email", "primary_email"

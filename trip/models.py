@@ -47,7 +47,7 @@ class Trip(Rivable):
         FileExtensionValidator(allowed_extensions=['geojson','gpx'])
     ])
 
-class Places(Rivable):
+class Place(Rivable):
     TYPE_OF_PLACES_CHOICES = [
     ('WN', 'Wildlife & Nature'),
     ('CT', 'City'),
@@ -95,8 +95,7 @@ class Image(models.Model):
     
     
 
-
-class Reviews(models.Model):
+class Review(models.Model):
     rivable = models.ForeignKey(Rivable, on_delete=models.DO_NOTHING)
     subject = models.CharField(max_length=50)
     description = models.CharField(max_length=1000)
@@ -115,6 +114,13 @@ class TripAccomodation(models.Model):
     pass
 class TripPlaces(models.Model):
     trip = models.ForeignKey(Trip, on_delete=models.DO_NOTHING,null=True)
-    places = models.ForeignKey(Places, on_delete=models.DO_NOTHING, null=True)
+    places = models.ForeignKey(Place, on_delete=models.DO_NOTHING, null=True)
 class TripTrasnsfers(models.Model):
     pass
+
+
+class UserLinked(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    saved_trips = models.ManyToManyField(Trip, blank=True,related_name="savedtrips") 
+    liked_trips = models.ManyToManyField(Trip, blank=True,related_name="likedtrips") 
+    saved_places = models.ManyToManyField(Place, blank=True,related_name="savedplaces") 
