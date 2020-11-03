@@ -32,36 +32,30 @@ SECRET_KEY = ')&jb8hjbz)*ms7zbjbitun6oa%w5xfm^suymjfqrsuof9vdhtm'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+
 ALLOWED_HOSTS = ['tripper1.herokuapp.com','localhost']
 
-
-GRAPHENE = {
-    'SCHEMA': 'Tripper.schema.schema', 
-    'MIDDLEWARE': [
-        'graphql_jwt.middleware.JSONWebTokenMiddleware',
-    ],
-}
 
 # Application definition
 
 INSTALLED_APPS = [
-    'rest_framework',
-    'graphene_django',
-    'users',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'django_extensions', # for get er model >>> python manage.py graph_models -a -g -o eer.png
     'wiki',
     'trip',
+    'users',
+    'authentication',
     'django_filters',
-    'graphql_auth',
-    'graphql_jwt.refresh_token.apps.RefreshTokenConfig',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'djoser',
 ]
-
-AUTH_USER_MODEL = 'users.User'
 
 
 MIDDLEWARE = [
@@ -77,35 +71,33 @@ MIDDLEWARE = [
 ]
 
 
-
-
 AUTHENTICATION_BACKENDS = [
-    'graphql_auth.backends.GraphQLAuthBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
 
-GRAPHQL_JWT = {
-    "JWT_VERIFY_EXPIRATION": True,
-    "JWT_ALLOW_ANY_CLASSES": [
-        "graphql_auth.mutations.Register",
-        "graphql_auth.mutations.VerifyAccount",
-        "graphql_auth.mutations.ResendActivationEmail",
-        "graphql_auth.mutations.SendPasswordResetEmail",
-        "graphql_auth.mutations.PasswordReset",
-        "graphql_auth.mutations.ObtainJSONWebToken",
-        "graphql_auth.mutations.VerifyToken",
-        "graphql_auth.mutations.RefreshToken",
-        "graphql_auth.mutations.RevokeToken",
-        "graphql_auth.mutations.VerifySecondaryEmail",
-    ],
 
-    # optional
-    "JWT_LONG_RUNNING_REFRESH_TOKEN": True,
+AUTH_USER_MODEL = 'users.User'
+
+
+DJOSER = { 
+    'USER_CREATE_PASSWORD_RETYPE' : True, 
+    'SERIALIZERS' : {
+        'user_create' : 'users.serializers.UserCreateSerializer',
+        'user' : 'users.serializers.UserCreateSerializer'
+    }
 }
+
+SITE_ID=1
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 10
+    'PAGE_SIZE': 10,
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    )
 }
 
 ROOT_URLCONF = 'Tripper.urls'
@@ -161,7 +153,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tehran'
 
 USE_I18N = True
 
@@ -181,4 +173,14 @@ options = DATABASES['default'].get('OPTIONS', {})
 options.pop('sslmode', None)
 
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'smtp.mailtrap.io'
+EMAIL_HOST_USER = '33d223d04af546'
+EMAIL_HOST_PASSWORD = '478c741d50c778'
+EMAIL_PORT = '2525'
+
+
+GRAPH_MODELS = { # For er exporting 
+    'all_applications' : True,
+    'group_models' : True,
+
+}

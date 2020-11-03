@@ -3,12 +3,15 @@ from users.models import User
 import datetime
 from django.core.validators import FileExtensionValidator
 from django.contrib.postgres.fields import ArrayField
+from exiffield.fields import ExifField
+from exiffield.getters import exifgetter
+
 
 class Rivable(models.Model):
     pass
 
 class TripActivities(models.Model):
-    TYPE_OF_ACTIVITIES_CHOICES = [ ## To Do.
+    TYPE_OF_ACTIVITIES_CHOICES = [ ## To Complete. Delete this multi choice 
     ('AD', 'Biking'),
     ('WN', 'Hiking'),
     ('CT', 'Running'),
@@ -17,7 +20,7 @@ class TripActivities(models.Model):
     title = models.CharField(choices=TYPE_OF_ACTIVITIES_CHOICES, max_length=2, blank=True)
 
 class TripCategory(models.Model):
-    TYPE_OF_TRIP_CHOICES = [
+    TYPE_OF_TRIP_CHOICES = [ # Delete this multi choice
     ('AD', 'Adventure'),
     ('WN', 'Wildlife & Nature'),
     ('CT', 'Cities'),
@@ -40,10 +43,9 @@ class Trip(Rivable):
     start_date = models.DateField()
     end_date = models.DateField()
     auther = models.ForeignKey(User, on_delete=models.CASCADE)
-    geo_json = models.FileField(validators=[
+    geo_json = models.FileField(blank=True,validators=[
         FileExtensionValidator(allowed_extensions=['geojson','gpx'])
     ])
-
 
 class Places(Rivable):
     TYPE_OF_PLACES_CHOICES = [
@@ -75,18 +77,24 @@ class Companions(models.Model):
     companion = models.ForeignKey(User,on_delete=models.DO_NOTHING)
 
 
-class Images(models.Model):
-    image_id = models.ForeignKey(Rivable, related_name='images', on_delete=models.DO_NOTHING)
+class Image(models.Model):
+    rivable = models.ForeignKey(Rivable, related_name='images', on_delete=models.DO_NOTHING)
     image = models.ImageField(upload_to='images/Places')
     default_image = models.BooleanField(default=False)
     subject = models.CharField(max_length=50)
     description = models.CharField(max_length=500)
+    latitud = models.CharField(max_length=20, editable = False, null=True)
+    longitud = models.CharField(max_length=20, editable = False, null= True)
+    exif = ExifField(
+        source='image',
+        denormalized_fields={
+            'latitud': exifgetter('GPSLatitude'),
+            'longitud': exifgetter('GPSLongitude'),
+        },
+    )
+    
     
 
-
-class Accomodation(Rivable):
-    api_id = models.CharField(max_length=100)
-    pass
 
 class Reviews(models.Model):
     rivable = models.ForeignKey(Rivable, on_delete=models.DO_NOTHING)
@@ -98,12 +106,15 @@ class Reviews(models.Model):
     helpful = models.PositiveIntegerField()
 
 class Transfer(models.Model):
-    api_id = models.CharField(max_length=100)
+    #api_id = models.CharField(max_length=100)
     pass
-
+class Accomodation(Rivable):
+    #api_id = models.CharField(max_length=100)
+    pass
 class TripAccomodation(models.Model):
     pass
 class TripPlaces(models.Model):
-    pass
+    trip = models.ForeignKey(Trip, on_delete=models.DO_NOTHING,null=True)
+    places = models.ForeignKey(Places, on_delete=models.DO_NOTHING, null=True)
 class TripTrasnsfers(models.Model):
     pass

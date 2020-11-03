@@ -1,9 +1,8 @@
-from .models import User
+from djoser.serializers import UserCreateSerializer, UserSerializer
 from rest_framework import serializers
+from .models import *
 
-
-class UserSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
+class UserCreateSerializer(UserCreateSerializer):  # pylint: disable=function-redefined
+    class Meta(UserCreateSerializer):
         model = User
-        fields = ['url', 'username', 'email', 'groups']
-
+        fields = '__all__'
