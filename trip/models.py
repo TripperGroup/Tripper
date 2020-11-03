@@ -5,6 +5,8 @@ from django.core.validators import FileExtensionValidator
 from django.contrib.postgres.fields import ArrayField
 from exiffield.fields import ExifField
 from exiffield.getters import exifgetter
+from django.core.validators import MaxValueValidator, MinValueValidator
+
 
 
 class Rivable(models.Model):
@@ -17,7 +19,7 @@ class TripActivities(models.Model):
     ('CT', 'Running'),
     ## ...
     ]
-    title = models.CharField(choices=TYPE_OF_ACTIVITIES_CHOICES, max_length=2, blank=True)
+    title = models.CharField(choices=TYPE_OF_ACTIVITIES_CHOICES, max_length=2, null=True)
 
 class TripCategory(models.Model):
     TYPE_OF_TRIP_CHOICES = [ # Delete this multi choice
@@ -32,18 +34,18 @@ class TripCategory(models.Model):
     ('CI', 'Coasts & islans'),
     ('FA', 'Family'),
     ]
-    title  = models.CharField(choices=TYPE_OF_TRIP_CHOICES, max_length=2)
+    title  = models.CharField(choices=TYPE_OF_TRIP_CHOICES, max_length=2, default=None, null=True)
 
 
 class Trip(Rivable):
     subject = models.CharField(max_length=200)
-    category = models.ManyToManyField(TripCategory)
-    activities = models.ManyToManyField(TripActivities)
-    created_at = datetime.datetime.now()
-    start_date = models.DateField()
-    end_date = models.DateField()
+    category = models.ManyToManyField(TripCategory, blank=True)
+    activities = models.ManyToManyField(TripActivities, blank=True)
+    created_at = models.DateField(auto_now=True, blank=True)
+    start_date = models.DateField(blank=True, null=True)
+    end_date = models.DateField(blank=True, null=True)
     auther = models.ForeignKey(User, on_delete=models.CASCADE)
-    geo_json = models.FileField(blank=True,validators=[
+    geo_json = models.FileField(blank=True,null=True,validators=[
         FileExtensionValidator(allowed_extensions=['geojson','gpx'])
     ])
 
@@ -64,12 +66,12 @@ class Place(Rivable):
     ('PR', 'Park')
     ]
     name = models.CharField(max_length=50)
-    description = models.CharField(max_length=500)
+    description = models.CharField(max_length=500, blank=True, null=True)
     longitude = models.DecimalField(max_digits=9, decimal_places=6, null=True)
     latitude  = models.DecimalField(max_digits=9, decimal_places=6, null=True)    
-    phone = models.CharField(max_length=20)
-    email = models.EmailField()
-    website = models.CharField(max_length=50)
+    phone = models.CharField(max_length=20, blank=True, null=True)
+    email = models.EmailField(blank=True, null=True)
+    website = models.CharField(max_length=50,blank=True, null=True)
 
 
 class Companions(models.Model):
@@ -93,16 +95,20 @@ class Image(models.Model):
         },
     )
     
-    
 
 class Review(models.Model):
     rivable = models.ForeignKey(Rivable, on_delete=models.DO_NOTHING)
-    subject = models.CharField(max_length=50)
+    subject = models.CharField(max_length=50, default=None)
     description = models.CharField(max_length=1000)
-    created_at = datetime.datetime.now()
+    created_at = models.DateField(auto_now=True, blank=True)
     auther = models.ForeignKey(User, on_delete=models.CASCADE)
-    stars = models.IntegerField()
-    helpful = models.PositiveIntegerField()
+    stars = models.IntegerField(blank=True, null=True,validators=[
+            MaxValueValidator(5),
+            MinValueValidator(0)
+        ])
+    helpfull = models.IntegerField(default=0,validators=[
+            MinValueValidator(0)
+        ])
 
 class Transfer(models.Model):
     #api_id = models.CharField(max_length=100)

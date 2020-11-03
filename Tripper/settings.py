@@ -30,10 +30,10 @@ if os.path.isfile(dotenv_file):
 SECRET_KEY = ')&jb8hjbz)*ms7zbjbitun6oa%w5xfm^suymjfqrsuof9vdhtm'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 
-ALLOWED_HOSTS = ['tripper1.herokuapp.com','localhost','http://127.0.0.1/']
+ALLOWED_HOSTS = ['tripper1.herokuapp.com','localhost','127.0.0.1:8001']
 
 
 # Application definition
@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'django_extensions', # for get er model >>> python manage.py graph_models -a -g -o eer.png
-    'wiki',
     'trip',
     'users',
     'authentication',
