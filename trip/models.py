@@ -119,7 +119,7 @@ class Accomodation(Rivable):
 class TripAccomodation(models.Model):
     pass
 class TripPlaces(models.Model):
-    trip = models.ForeignKey(Trip, on_delete=models.DO_NOTHING,null=True)
+    trip = models.ForeignKey(Trip,related_name='places', on_delete=models.DO_NOTHING,null=True)
     places = models.ForeignKey(Place, on_delete=models.DO_NOTHING, null=True)
 class TripTrasnsfers(models.Model):
     pass

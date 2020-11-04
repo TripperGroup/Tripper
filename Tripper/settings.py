@@ -93,9 +93,10 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10,
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication'
     ),
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     )
 }
 
@@ -172,14 +173,16 @@ options = DATABASES['default'].get('OPTIONS', {})
 options.pop('sslmode', None)
 
 
-EMAIL_HOST = 'smtp.mailtrap.io'
-EMAIL_HOST_USER = '33d223d04af546'
-EMAIL_HOST_PASSWORD = '478c741d50c778'
-EMAIL_PORT = '2525'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_HOST = 'mail.trippergroup.ir'
+EMAIL_HOST_USER = 'info@trippergroup.ir'
+EMAIL_USE_SSL = True
+EMAIL_HOST_PASSWORD = 'the.miiim48836083'
+EMAIL_PORT = '465'
 
 
 GRAPH_MODELS = { # For er exporting 
     'all_applications' : True,
     'group_models' : True,
-
 }

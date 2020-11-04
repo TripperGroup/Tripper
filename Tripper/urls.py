@@ -19,12 +19,35 @@ from rest_framework import routers
 from users import views
 from django.views.decorators.csrf import csrf_exempt
 from django.conf.urls import url
+from users.views import UserViewSet, FollowerViewSet, FollowingViewSet
+from trip.views import TripViewSet, PlaceViewSet
+from rest_framework.routers import DefaultRouter
+
+
+router = DefaultRouter()
+router.register(r'users', UserViewSet, basename='user')
+router.register(r'followers', FollowerViewSet, basename='follower')
+router.register(r'following', FollowingViewSet, basename='following')
+router.register(r'trip', TripViewSet, basename='trip')
+router.register(r'place', PlaceViewSet, basename='place')
+
+
+
+
+
+
+
+admin.site.site_header = "Tripper Admin Panel"
+admin.site.site_title = "Tripper Admin Panel"
+admin.site.index_title = "Welcome to Tripper Admin Panel"
 
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/auth/', include('authentication.urls'))
+    path('api/auth/', include('authentication.urls')),
+    path('api/',include(router.urls)),
+    path('api-auth/', include('rest_framework.urls')),
     
 ]
 

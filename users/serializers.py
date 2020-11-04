@@ -6,3 +6,15 @@ class UserCreateSerializer(UserCreateSerializer):  # pylint: disable=function-re
     class Meta(UserCreateSerializer):
         model = User
         fields = '__all__'
+
+class UserSerializer(serializers.ModelSerializer): # pylint: disable=function-redefined
+    class Meta:
+        model = User
+        fields = '__all__'
+
+
+class FollowingSerializer(serializers.ModelSerializer): # pylint: disable=function-redefined
+    class Meta:
+        model = UserFollowing
+        fields = ('user_id','following_user_id')
+        

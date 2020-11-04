@@ -6,9 +6,6 @@ import datetime
 class User(AbstractUser):
     email = models.EmailField( max_length=100, verbose_name="email address", unique=True)
     gender = models.CharField(max_length=20, blank=True)
-
-    
-
     about = models.TextField(blank=True)
     trip_status = models.BooleanField(default=False)
     joined_at = datetime.datetime.now()
@@ -26,6 +23,9 @@ class UserFollowing(models.Model):
 
     # Even add info about when user started following
     created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user_id', 'following_user_id',)
     
 
 
