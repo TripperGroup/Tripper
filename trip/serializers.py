@@ -23,6 +23,8 @@ class TripSummerySerializer(serializers.ModelSerializer):
     image_set = ImageSerializer(many=True,read_only=True)
     auther = UserSummerySerializer()
 
+    
+
     class Meta:
         model = Trip
         fields = [
@@ -31,8 +33,6 @@ class TripSummerySerializer(serializers.ModelSerializer):
             'category',
             'description',
             'activities',
-            'start_date',
-            'end_date',
             'auther',
             'image_set',
             'places',

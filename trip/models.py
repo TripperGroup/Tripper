@@ -45,7 +45,7 @@ class Trip(Rivable):
     created_at = models.DateField(auto_now=True, blank=True)
     start_date = models.DateField(blank=True, null=True)
     end_date = models.DateField(blank=True, null=True) 
-    auther = models.ForeignKey(User, on_delete=models.CASCADE, related_name='profile')
+    auther = models.ForeignKey(User, on_delete=models.CASCADE)
     geo_json = models.FileField(blank=True,null=True,validators=[
         FileExtensionValidator(allowed_extensions=['geojson','gpx'])
     ])
