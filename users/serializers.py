@@ -12,6 +12,11 @@ class UserSerializer(serializers.ModelSerializer): # pylint: disable=function-re
         model = User
         fields = '__all__'
 
+class UserSummerySerializer(serializers.ModelSerializer): # pylint: disable=function-redefined
+    class Meta:
+        model = User
+        fields = ('username','avatar' )
+
 
 class FollowingSerializer(serializers.ModelSerializer): # pylint: disable=function-redefined
     class Meta:

@@ -17,6 +17,9 @@ class User(AbstractUser):
     USERNAME_FIELD = "username"   # e.g: "username", "email"
     EMAIL_FIELD = "email"         # e.g: "email", "primary_email"
 
+    def __str__(self):
+        return '%s' % (self.username)
+
 class UserFollowing(models.Model):
     user_id = models.ForeignKey(User, related_name="following", on_delete=models.DO_NOTHING)
     following_user_id = models.ForeignKey(User, related_name="followers", on_delete=models.DO_NOTHING)
