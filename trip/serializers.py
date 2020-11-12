@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import *
 from users.serializers import UserSummerySerializer
+from datetime import date
 
 
 class ImageSerializer(serializers.ModelSerializer):
@@ -22,7 +23,7 @@ class TripSummerySerializer(serializers.ModelSerializer):
     places = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
     image_set = ImageSerializer(many=True,read_only=True)
     auther = UserSummerySerializer()
-
+    trip_days = serializers.SerializerMethodField('get_days')
     
 
     class Meta:
@@ -36,8 +37,19 @@ class TripSummerySerializer(serializers.ModelSerializer):
             'auther',
             'image_set',
             'places',
+            'trip_days',
             ]
         read_only_fields = fields
+
+
+
+    @staticmethod
+    def get_days(obj):
+        if obj.end_date and obj.start_date : 
+            delta = obj.end_date - obj.start_date
+            return  delta.days
+        else :
+            return None
 
 class PlaceSerializer(serializers.ModelSerializer): # pylint: disable=function-redefined
     class Meta:
