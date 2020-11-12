@@ -11,7 +11,8 @@ class TripViewSet(viewsets.ModelViewSet):
 
 class TripSummeryViewSet(viewsets.ModelViewSet):
     serializer_class = TripSummerySerializer
-    queryset = Trip.objects.all()
+    queryset = Trip.objects.all().order_by('-created_at')
+    ordering = ['create_date']
 
 class PlaceViewSet(viewsets.ModelViewSet):
     serializer_class = PlaceSerializer
