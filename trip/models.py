@@ -41,7 +41,7 @@ class Trip(Rivable):
     subject = models.CharField(max_length=200)
     description = models.TextField(blank=True, null=True)
     category = models.ManyToManyField(TripCategory, blank=True)
-    activities = models.ManyToManyField(TripActivities, blank=True)
+    activities = models.ForeignKey(TripActivities,null=True, on_delete=models.DO_NOTHING)
     created_at = models.DateField(auto_now=True, blank=True)
     start_date = models.DateField(blank=True, null=True)
     end_date = models.DateField(blank=True, null=True) 

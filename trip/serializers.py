@@ -24,7 +24,6 @@ class TripSummerySerializer(serializers.ModelSerializer):
     image_set = ImageSerializer(many=True,read_only=True)
     auther = UserSummerySerializer()
     trip_days = serializers.SerializerMethodField('get_days')
-    
 
     class Meta:
         model = Trip
@@ -40,8 +39,6 @@ class TripSummerySerializer(serializers.ModelSerializer):
             'trip_days',
             ]
         read_only_fields = fields
-
-
 
     @staticmethod
     def get_days(obj):
