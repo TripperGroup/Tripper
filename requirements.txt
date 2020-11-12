@@ -6,6 +6,7 @@ backcall==0.2.0
 certifi==2020.6.20
 cffi==1.14.3
 chardet==3.0.4
+choicesenum==0.7.0
 coreapi==2.3.3
 coreschema==0.0.4
 cryptography==3.1.1
@@ -14,6 +15,8 @@ defusedxml==0.7.0rc1
 dj-database-url==0.5.0
 Django==3.1.2
 django-allauth==0.43.0
+django-exiffield==3.0.0
+django-extensions==3.0.9
 django-filter==2.4.0
 django-graphiql==0.4.4
 django-graphql-auth==0.3.14
@@ -39,6 +42,7 @@ isort==5.6.2
 itypes==1.2.0
 jedi==0.17.2
 Jinja2==2.11.2
+jsonfield==3.1.0
 jupyter-client==6.1.7
 jupyter-core==4.6.3
 lazy-object-proxy==1.4.3
@@ -55,9 +59,11 @@ psycopg2==2.8.6
 psycopg2-binary==2.8.6
 ptyprocess==0.6.0
 pycparser==2.20
+pydot==1.4.1
 Pygments==2.7.1
 PyJWT==1.7.1
 pylint==2.6.0
+pyparsing==2.4.7
 python-dateutil==2.8.1
 python-dotenv==0.14.0
 python3-openid==3.2.0
