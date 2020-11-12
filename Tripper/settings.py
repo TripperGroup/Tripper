@@ -47,8 +47,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'django_extensions', # for get er model >>> python manage.py graph_models -a -g -o eer.png
-    'trip',
     'users',
+    'trip',
     'authentication',
     'django_filters',
     'rest_framework',
