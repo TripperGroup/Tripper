@@ -16,6 +16,11 @@ import os
 import django_heroku
 
 
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+BASE_DIR = Path(__file__).resolve().parent.parent
+dotenv_file = os.path.join(BASE_DIR, ".env")
+if os.path.isfile(dotenv_file):
+    dotenv.load_dotenv(dotenv_file)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -33,14 +38,14 @@ ALLOWED_HOSTS = ['tripper1.herokuapp.com','localhost','127.0.0.1:8001']
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.auth',
-    'users',
     'django.contrib.admin',
+    'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'users',
     'trip',
     'authentication',
     'django_filters',
@@ -48,7 +53,6 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'djoser',
     'django_extensions', # for get er model >>> python manage.py graph_models -a -g -o eer.png
-
 
 ]
 
@@ -120,19 +124,9 @@ WSGI_APPLICATION = 'Tripper.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+DATABASES = {}
 
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
-
-
-db_env = dj_database_url.config(conn_max_age=600)
-DATABASES['default'].update(db_env)
+DATABASES['default'] = dj_database_url.config(conn_max_age=600)
 
 
 # Password validation
@@ -185,6 +179,8 @@ MEDIA_URL = "/media/"
 
 django_heroku.settings(locals())
 
+# Activate Django-Heroku.
+del DATABASES['default']['OPTIONS']['sslmode']
 
 GRAPH_MODELS = { # For er exporting 
     'all_applications' : True,
