@@ -19,6 +19,7 @@ class FollowingViewSet(viewsets.ModelViewSet):
 
 class FollowerViewSet(viewsets.ModelViewSet):
     serializer_class = FollowingSerializer
-    user = User.objects.get(id=2)
-    queryset = user.followers.all()
+    queryset = UserFollowing.objects.all()
+    # user = User.objects.get(id=2)
+    # queryset = user.followers.all()
     
