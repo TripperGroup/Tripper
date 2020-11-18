@@ -164,25 +164,21 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
+
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
+
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_ROOT = os.path.join(BASE_DIR,"media")
 MEDIA_URL = "/media/"
 
 django_heroku.settings(locals())
-options = DATABASES['default'].get('OPTIONS', {})
-options.pop('sslmode', None)
 
-
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
-EMAIL_HOST = 'mail.trippergroup.ir'
-EMAIL_HOST_USER = 'info@trippergroup.ir'
-EMAIL_USE_SSL = True
-EMAIL_HOST_PASSWORD = 'the.miiim48836083'
-EMAIL_PORT = '465'
-
+# Activate Django-Heroku.
+del DATABASES['default']['OPTIONS']['sslmode']
 
 GRAPH_MODELS = { # For er exporting 
     'all_applications' : True,
