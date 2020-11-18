@@ -9,7 +9,6 @@ class User(AbstractUser):
     ('WM', 'Women'),
     ]
     gender = models.CharField(choices=GENDER,max_length=2, null=True, blank=True)
-    
     email = models.EmailField( max_length=100, verbose_name="email address", unique=True)
     about = models.TextField(blank=True)
     trip_status = models.BooleanField(default=False)
@@ -18,15 +17,11 @@ class User(AbstractUser):
     avatar = models.ImageField(blank=True,null= True , upload_to='images/profile/avatar')
     header = models.ImageField(blank= True, null= True, upload_to='images/profile/header')
 
-    
-
-
     REQUIRED_FIELDS = ['email']
     USERNAME_FIELD = "username"   # e.g: "username", "email"
     EMAIL_FIELD = "email"         # e.g: "email", "primary_email"
 
-    def __str__(self):
-        return '%s' % (self.username)
+    
 
 class UserFollowing(models.Model):
     user_id = models.ForeignKey(User, related_name="following", on_delete=models.DO_NOTHING)
