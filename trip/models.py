@@ -42,7 +42,7 @@ class Trip(Rivable):
     description = models.TextField(blank=True, null=True)
     category = models.ManyToManyField(TripCategory, blank=True)
     activities = models.ForeignKey(TripActivities,null=True, on_delete=models.DO_NOTHING)
-    created_at = models.DateField(auto_now=True, blank=True) # Most be DateTimeField
+    created_at = models.DateTimeField(auto_now=True, blank=True) # Most be DateTimeField
     start_date = models.DateField(blank=True, null=True)
     end_date = models.DateField(blank=True, null=True) 
     auther = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -101,7 +101,7 @@ class Review(models.Model):
     rivable = models.ForeignKey(Rivable, on_delete=models.DO_NOTHING)
     subject = models.CharField(max_length=50, default=None)
     description = models.CharField(max_length=1000)
-    created_at = models.DateField(auto_now=True, blank=True)
+    created_at = models.DateTimeField(auto_now=True, blank=True)
     auther = models.ForeignKey(User, on_delete=models.CASCADE)
     stars = models.IntegerField(blank=True, null=True,validators=[
             MaxValueValidator(5),
