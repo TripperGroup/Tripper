@@ -3,8 +3,8 @@ from users.models import User
 import datetime
 from django.core.validators import FileExtensionValidator
 from django.contrib.postgres.fields import ArrayField
-from exiffield.fields import ExifField
-from exiffield.getters import exifgetter
+# from exiffield.fields import ExifField
+# from exiffield.getters import exifgetter
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 
@@ -88,13 +88,13 @@ class Image(models.Model):
     description = models.CharField(max_length=500)
     latitud = models.CharField(max_length=20, editable = False, null=True)
     longitud = models.CharField(max_length=20, editable = False, null= True)
-    exif = ExifField(
-        source='image',
-        denormalized_fields={
-            'latitud': exifgetter('GPSLatitude'),
-            'longitud': exifgetter('GPSLongitude'),
-        },
-    )
+    # exif = ExifField(
+    #     source='image',
+    #     denormalized_fields={
+    #         'latitud': exifgetter('GPSLatitude'),
+    #         'longitud': exifgetter('GPSLongitude'),
+    #     },
+    # )
     
 
 class Review(models.Model):
