@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Image, Trip, TripCategory, TripActivities, Review, TripPlaces, UserLinked, Companions, Place
+from .models import Image, Trip, TripCategory, TripActivities, Review, TripPlaces, Companions, Place
 
 
 # Register your models here.
@@ -14,7 +14,6 @@ admin.site.register(TripCategory)
 admin.site.register(TripActivities)
 admin.site.register(TripPlaces)
 admin.site.register(Image,ImageAdmin)
-admin.site.register(UserLinked)
 admin.site.register(Companions)
 admin.site.register(Place)
 
