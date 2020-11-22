@@ -12,6 +12,7 @@ class Article(models.Model):
     category = models.ForeignKey(Category, verbose_name="Category", on_delete=models.DO_NOTHING)
     author = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     created_at = models.DateTimeField(auto_now_add=True)
+    image = models.ImageField(blank=True,null= True, upload_to='images/articles')
     Context = models.FileField(validators=[
         FileExtensionValidator(allowed_extensions=['html','md','txt'])
     ])
