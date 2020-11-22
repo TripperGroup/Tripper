@@ -11,7 +11,7 @@ class Article(models.Model):
     title = models.CharField(max_length=50)
     category = models.ForeignKey(Category, verbose_name="Category", on_delete=models.DO_NOTHING)
     author = models.ForeignKey(User, on_delete=models.DO_NOTHING)
-    created_at = datetime.datetime.now()
+    created_at = models.DateTimeField(auto_now_add=True)
     Context = models.FileField(validators=[
         FileExtensionValidator(allowed_extensions=['html','md','txt'])
     ])
