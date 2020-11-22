@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'users',
     'trip',
+    'wiki',
     'authentication',
     'django_filters',
     'rest_framework',
