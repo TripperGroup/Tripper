@@ -21,6 +21,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.conf.urls import url
 from users.views import UserViewSet, FollowerViewSet, FollowingViewSet, UserSummeryViewSet
 from trip.views import TripViewSet, PlaceViewSet, ImageViewSet, TripSummeryViewSet
+from wiki.views import ArticleViewSet
 from rest_framework.routers import DefaultRouter
 from django.conf import settings
 from django.conf.urls.static import static
@@ -33,6 +34,9 @@ router.register(r'trip', TripViewSet, basename='trip')
 router.register(r'tripSummery', TripSummeryViewSet, basename='tripSummery')
 router.register(r'place', PlaceViewSet, basename='place')
 router.register(r'image', ImageViewSet, basename='image')
+router.register(r'articles', ArticleViewSet, basename='articles')
+
+
 #router.register(r'userSummery', UserSummeryViewSet, basename='userSummery')
 
 
