@@ -9,8 +9,6 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 
-class Rivable(models.Model):
-    pass
 
 class TripActivities(models.Model):
     TYPE_OF_ACTIVITIES_CHOICES = [ ## To Complete. Delete this multi choice 
@@ -37,7 +35,7 @@ class TripCategory(models.Model):
     title  = models.CharField(choices=TYPE_OF_TRIP_CHOICES, max_length=2, default=None, null=True)
 
 
-class Trip(Rivable):
+class Trip(models.Model):
     subject = models.CharField(max_length=200)
     description = models.TextField(blank=True, null=True)
     category = models.ManyToManyField(TripCategory, blank=True)
@@ -50,7 +48,7 @@ class Trip(Rivable):
         FileExtensionValidator(allowed_extensions=['geojson','gpx'])
     ])
 
-class Place(Rivable):
+class Place(models.Model):
     TYPE_OF_PLACES_CHOICES = [
     ('WN', 'Wildlife & Nature'),
     ('CT', 'City'),
@@ -80,8 +78,8 @@ class Companions(models.Model):
     companion = models.ForeignKey(User,on_delete=models.DO_NOTHING)
 
 
-class Image(models.Model):
-    rivable = models.ForeignKey(Rivable, related_name='images', on_delete=models.DO_NOTHING)
+class TripImage(models.Model):
+    trip = models.ForeignKey(Trip, related_name='images', on_delete=models.DO_NOTHING)
     image = models.ImageField(upload_to='images/Places')
     default_image = models.BooleanField(default=False)
     subject = models.CharField(max_length=50)
@@ -97,8 +95,8 @@ class Image(models.Model):
     # )
     
 
-class Review(models.Model):
-    rivable = models.ForeignKey(Rivable, on_delete=models.DO_NOTHING)
+class TripReview(models.Model):
+    trip = models.ForeignKey(Trip, on_delete=models.DO_NOTHING)
     subject = models.CharField(max_length=50, default=None)
     description = models.CharField(max_length=1000)
     created_at = models.DateTimeField(auto_now=True, blank=True)
@@ -111,19 +109,11 @@ class Review(models.Model):
             MinValueValidator(0)
         ])
 
-class Transfer(models.Model):
-    #api_id = models.CharField(max_length=100)
-    pass
-class Accomodation(Rivable):
-    #api_id = models.CharField(max_length=100)
-    pass
-class TripAccomodation(models.Model):
-    pass
+
 class TripPlaces(models.Model):
-    trip = models.ForeignKey(Trip,related_name='places', on_delete=models.DO_NOTHING,null=True)
-    places = models.ForeignKey(Place, on_delete=models.DO_NOTHING, null=True)
-class TripTrasnsfers(models.Model):
-    pass
+    trip = models.ForeignKey(Trip,related_name='places', on_delete=models.DO_NOTHING)
+    place = models.ForeignKey(Place, on_delete=models.DO_NOTHING)
+
 
 
 class UserLinked(models.Model):
