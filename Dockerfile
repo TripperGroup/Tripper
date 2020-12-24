@@ -1,6 +1,6 @@
 
 
-FROM python:3
+FROM python:latest
 
 # USER app
 ENV PYTHONUNBUFFERED 1
