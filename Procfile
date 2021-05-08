@@ -1,0 +1,1 @@
+web: gunicorn tripperv1.wsgi
