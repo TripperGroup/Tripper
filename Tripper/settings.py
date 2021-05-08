@@ -32,7 +32,7 @@ SECRET_KEY = ')&jb8hjbz)*ms7zbjbitun6oa%w5xfm^suymjfqrsuof9vdhtm'
 DEBUG = True
 
 
-ALLOWED_HOSTS = ['tripper1.herokuapp.com','localhost','127.0.0.1:8001']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
