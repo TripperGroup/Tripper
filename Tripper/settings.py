@@ -13,6 +13,9 @@ import dj_database_url
 from pathlib import Path
 import os
 
+import django_heroku
+
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -48,7 +51,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'djoser',
-    'django_extensions', # for get er model >>> python manage.py graph_models -a -g -o eer.png
 
 ]
 
@@ -168,6 +170,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 
 STATIC_URL = '/static/'
@@ -184,3 +187,14 @@ GRAPH_MODELS = { # For er exporting
     'all_applications' : True,
     'group_models' : True,
 }
+
+AWS_S3_ENDPOINT_URL = os.getenv('AWS_S3_ENDPOINT_URL')
+AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
+AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+AWS_S3_SIGNATURE_VERSION = 's3v4'
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+AWS_S3_VERIFY = True
+
+django_heroku.settings(locals())
