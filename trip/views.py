@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
 from .serializers import TripSerializer, PlaceSerializer, ImageSerializer, TripSummerySerializer
-from .models import Trip, Place, Image
+from .models import Trip, Place, TripImage
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework import status,request
@@ -20,4 +20,4 @@ class PlaceViewSet(viewsets.ModelViewSet):
 
 class ImageViewSet(viewsets.ModelViewSet):
     serializer_class = ImageSerializer
-    queryset = Image.objects.all()
+    queryset = TripImage.objects.all()

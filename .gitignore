@@ -7,4 +7,8 @@ db.sqlite3
 /venv/
 .vscode
 .env
+bin/
+lib/
+staticfiles/
+.idea/
 

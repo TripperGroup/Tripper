@@ -6,12 +6,12 @@ from datetime import date
 
 class ImageSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Image
+        model = TripImage
         exclude = ['exif']
       
 
 class TripSerializer(serializers.ModelSerializer): # pylint: disable=function-redefined
-    images = serializers.PrimaryKeyRelatedField(many=True, queryset = Image.objects.all()) ## Performance bug !!! Shoud be nested or hyperlinkRelated Or slug relate??
+    images = serializers.PrimaryKeyRelatedField(many=True, queryset = TripImage.objects.all()) ## Performance bug !!! Shoud be nested or hyperlinkRelated Or slug relate??
     places = serializers.PrimaryKeyRelatedField(many=True, queryset = Place.objects.all())
     
     class Meta:
