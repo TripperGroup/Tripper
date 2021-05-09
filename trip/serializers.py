@@ -7,6 +7,7 @@ from datetime import date
 class ImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = TripImage
+        fields = "__all__"
 
 
 class TripSerializer(serializers.ModelSerializer):  # pylint: disable=function-redefined
